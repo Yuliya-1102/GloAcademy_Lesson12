@@ -5,12 +5,16 @@ const headerInput = document.querySelector('.header-input');
 const todoList = document.querySelector('.todo-list');
 const todoCompleted = document.querySelector('.todo-completed');
 
-const todoDate = []; //массив для объектов
+let todoDate = []; //массив для объектов
 
-const render = function(){
+if(localStorage.getItem('todo')){ // проверяем на наличие todo в LocalStorage
+    todoDate = JSON.parse(localStorage.getItem('todo')); // получаем getItem, затем распарсить todo (parse), т.е. в []
+    render();
+}
+
+function render(){
     todoList.textContent = '';
     todoCompleted.textContent = '';
-    let todoDate = JSON.parse( localStorage.todo );
    
     todoDate.forEach(function(item){
         const li = document.createElement('li');
@@ -44,7 +48,6 @@ const render = function(){
         // навешиваем событие на значек с корзиной, удалено 
         const todoRemove = li.querySelector('.todo-remove');
         todoRemove.addEventListener('click', function(){
-            console.log(todoDate.indexOf(item));
             let i = todoDate.indexOf(item);
             if(i>=0){
                 todoDate.splice(i, 1);
@@ -54,7 +57,7 @@ const render = function(){
         });
         
     }); // forEach
-};
+}
 
 todoControl.addEventListener('submit', function(event){ // везде, где есть form и кнопка => submit
     event.preventDefault();
@@ -67,7 +70,6 @@ todoControl.addEventListener('submit', function(event){ // везде, где е
             value: headerInput.value,
             completed: false
         };
-        let todoDate = JSON.parse( localStorage.todo );
         todoDate.push(newTodo);
 
         localStorage.setItem('todo', JSON.stringify(todoDate));

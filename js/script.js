@@ -67,15 +67,13 @@ todoControl.addEventListener('submit', function(event){ // везде, где е
             value: headerInput.value,
             completed: false
         };
-        // let todoDate = JSON.parse( localStorage.todo );
+        let todoDate = JSON.parse( localStorage.todo );
         todoDate.push(newTodo);
 
         localStorage.setItem('todo', JSON.stringify(todoDate));
     
         render();
-        
-       
-       
+         
     }
     
 });
